@@ -6,7 +6,7 @@ Rishabh Jain - 2020CSB1198
 Specifications:
 Inputs: Weight[3:0], Entry_Exit, Enable
 Outputs: Level[1:0], Reject
-Intermediate Variables: Capacity[7:0], Threshold[3:0][3:0]
+Intermediate Variables: [3:0]Capacity[3:0], [3:0]Threshold[3:0]
 
 Module definition:
 module car_park (Weight[3:0], Entry_Exit, Enable, Level[1:0], Reject);
