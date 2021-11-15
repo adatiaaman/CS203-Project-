@@ -1,7 +1,11 @@
-module car_park (Weight, Entry_Exit, Enable, Level, Reject);
+module car_park (Weight, Entry_Exit, Enable, Level, Reject, Capacity0, Capacity1, Capacity2, Capacity3, cap_enable);
 
     input [3:0] Weight;
-    input Entry_Exit, Enable;
+    input Entry_Exit, Enable, cap_enable;
+    output reg [3:0] Capacity0;
+    output reg [3:0] Capacity1;
+    output reg [3:0] Capacity2;
+    output reg [3:0] Capacity3;
 
     output reg [1:0] Level;
     output reg Reject;
@@ -12,19 +16,21 @@ module car_park (Weight, Entry_Exit, Enable, Level, Reject);
     assign Threshold[2] = 4'b1011; // 8 - 11
     assign Threshold[3] = 4'b1111; // 12 - 15
 
-    wire [3:0] Capacity [3:0];
-    assign Capacity[0] = 4'b1111;
-    assign Capacity[1] = 4'b1111;
-    assign Capacity[2] = 4'b1111;
-    assign Capacity[3] = 4'b1111;
-    
+    always @(posedge cap_enable) begin
+        Capacity0 <= 4'b1111;
+        Capacity1 <= 4'b1111;
+        Capacity2 <= 4'b1111;
+        Capacity3 <= 4'b1111;
+    end
+
+
     always @(posedge Enable) begin
         Reject <= 1'b0;
         if(Entry_Exit == 1'b1) begin
             if(Weight <= Threshold[0]) begin
                 Level <= 2'b00;
-                if(Capacity[0] != 4'b0000) begin
-                    Capacity[0] = Capacity[0] - 1;
+                if(Capacity0 != 4'b0000) begin
+                    Capacity0 = Capacity0 - 1;
                 end
                 else begin
                     Reject <= 1'b1;
@@ -32,8 +38,8 @@ module car_park (Weight, Entry_Exit, Enable, Level, Reject);
             end
             else if(Weight <= Threshold[1]) begin
                 Level <= 2'b01;
-                if(Capacity[1] != 4'b0000) begin
-                    Capacity[1] = Capacity[1] - 1;
+                if(Capacity1 != 4'b0000) begin
+                    Capacity1 = Capacity1 - 1;
                 end
                 else begin
                     Reject <= 1'b1;
@@ -41,8 +47,8 @@ module car_park (Weight, Entry_Exit, Enable, Level, Reject);
             end
             else if(Weight <= Threshold[2]) begin
                 Level <= 2'b10;
-                if(Capacity[2] != 4'b0000) begin
-                    Capacity[2] = Capacity[2] - 1;
+                if(Capacity2 != 4'b0000) begin
+                    Capacity2 = Capacity2 - 1;
                 end
                 else begin
                     Reject <= 1'b1;
@@ -50,8 +56,8 @@ module car_park (Weight, Entry_Exit, Enable, Level, Reject);
             end
             else if(Weight <= Threshold[3]) begin
                 Level <= 2'b11;
-                if(Capacity[3] != 4'b0000) begin
-                    Capacity[3] = Capacity[3] - 1;
+                if(Capacity3 != 4'b0000) begin
+                    Capacity3 = Capacity3 - 1;
                 end
                 else begin
                     Reject <= 1'b1;
@@ -61,26 +67,26 @@ module car_park (Weight, Entry_Exit, Enable, Level, Reject);
         else begin
             if(Weight <= Threshold[0]) begin
                 Level <= 2'b00;
-                if(Capacity[0] != 4'b1111) begin
-                    Capacity[0] = Capacity[0] + 1;
+                if(Capacity0 != 4'b1111) begin
+                    Capacity0 = Capacity0 + 1;
                 end
             end
             else if(Weight <= Threshold[1]) begin
                 Level <= 2'b01;
-                if(Capacity[1] != 4'b1111) begin
-                    Capacity[1] = Capacity[1] + 1;
+                if(Capacity1 != 4'b1111) begin
+                    Capacity1 = Capacity1 + 1;
                 end
             end
             else if(Weight <= Threshold[2]) begin
                 Level <= 2'b10;
-                if(Capacity[2] != 4'b1111) begin
-                    Capacity[2] = Capacity[2] + 1;
+                if(Capacity2 != 4'b1111) begin
+                    Capacity2 = Capacity2 + 1;
                 end
             end
             else if(Weight <= Threshold[3]) begin
                 Level <= 2'b11;
-                if(Capacity[3] != 4'b1111) begin
-                    Capacity[3] = Capacity[3] + 1;
+                if(Capacity3 != 4'b1111) begin
+                    Capacity3 = Capacity3 + 1;
                 end
             end
         end
