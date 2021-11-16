@@ -20,7 +20,7 @@ Enable - Only after Enable is 1, the input will be processed by the system.
 Entry_Exit - If 1, vehicle will be entered and a Tag will be generated which will be displayed. If 0, based on the Tag inputted, that vehicle will be exited from the system. 
 Weight - Input the weight of the vehicle that enters the parking system.
 Threshold - Based on the threshold, the weight will be judged and accordingly the level will be allotted.
-Level - Level allotted to the vehicle (displayed using LED).
+Level - Level allotted to the vehicle.
 cap_enable - Variable used to initialise Capacity for each level
 Capacity - It will keep track of how many vehicles are there in the system. We can Increase it by 1, when exited and Decrease it by 1, when entered. Capacity0, Capacity1, Capacity2 and Capacity3 variables storing space for each level.
 Reject - If a spot cannot be allotted, then Reject becomes 1.
